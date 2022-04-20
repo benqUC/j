@@ -23,7 +23,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
             this.sfxRocket.play();
         }
 
-         //left/right mouse movement
+         // left/right mouse movement
          this.x = pointer.worldX;
          if(this.x >= borderUISize + this.width) {
              this.x -= this.moveSpeed;
