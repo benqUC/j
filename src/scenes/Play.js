@@ -66,7 +66,7 @@ class Play extends Phaser.Scene {
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
 
-
+        // display timer
         let timerConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
@@ -79,8 +79,7 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        // var remaining = game.settings.gameTimer.getRemainingSeconds(); 
-        this.gameTimer = this.add.text(borderPadding, borderPadding, game.settings.gameTimer, timerConfig);
+        this.timerLeft = this.add.text(borderPadding, borderPadding, game.settings.gameTimer, timerConfig);
 
 
         // GAME OVER flag
@@ -126,6 +125,17 @@ class Play extends Phaser.Scene {
         if (this.checkCollision(this.p1Rocket, this.ship01)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
+        }
+
+        // if (this.gameTimer.getElapsedSeconds() == 1) {
+        //     this.timerLeft.text = this.timerLeft.getOverallRemainingSeconds();
+        // }
+
+        // this.speedUp = false;
+
+        if (((game.settings.gameTimer = 60000 && this.clock.getRemaining() <= 30000) || (game.settings.gameTimer = 45000 && this.clock.getRemaining() <= 15000)) && !this.speedUp ){
+            this.moveSpeed *= 2;
+            this.speedUp = true;
         }
     }
 
