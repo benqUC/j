@@ -27,6 +27,9 @@ class Play extends Phaser.Scene {
         // add Rocket (p1)
         this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0);
 
+        this.p2Rocket= new Rocket1(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(1.5, 0);
+
+
         // add Spaceships (x3)
         this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'spaceship', 0, 30).setOrigin(0, 0);
         this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0,0);
@@ -108,6 +111,7 @@ class Play extends Phaser.Scene {
 
         if(!this.gameOver) {
             this.p1Rocket.update();             // update p1
+            this.p2Rocket.update();             // update p2
              this.ship01.update();               // update spaceship (x3)
             this.ship02.update();
             this.ship03.update();
@@ -127,16 +131,24 @@ class Play extends Phaser.Scene {
             this.shipExplode(this.ship01);
         }
 
+        // check collisions for p2
+        if(this.checkCollision(this.p2Rocket, this.ship03)) {
+            this.p2Rocket.reset();
+            this.shipExplode(this.ship03);
+        }
+        if (this.checkCollision(this.p2Rocket, this.ship02)) {
+            this.p2Rocket.reset();
+            this.shipExplode(this.ship02);
+        }
+        if (this.checkCollision(this.p2Rocket, this.ship01)) {
+            this.p2Rocket.reset();
+            this.shipExplode(this.ship01);
+        }
+
+
         // if (this.gameTimer.getElapsedSeconds() == 1) {
         //     this.timerLeft.text = this.timerLeft.getOverallRemainingSeconds();
         // }
-
-        // this.speedUp = false;
-
-        if (((game.settings.gameTimer = 60000 && this.clock.getRemaining() <= 30000) || (game.settings.gameTimer = 45000 && this.clock.getRemaining() <= 15000)) && !this.speedUp ){
-            this.moveSpeed *= 2;
-            this.speedUp = true;
-        }
     }
 
     checkCollision(rocket, ship) {
