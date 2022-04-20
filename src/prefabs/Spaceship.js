@@ -15,12 +15,12 @@ class Spaceship extends Phaser.GameObjects.Sprite {
             this.reset();
         }
 
-        // this.speedUp = false;
+        // // this.speedUp = false;
 
-        if(((game.settings.gameTimer = 60000 && this.clock.getRemaining() <= 30000) || (game.settings.gameTimer = 45000 && this.clock.getRemaining() <= 15000)) && !this.speedUp ){
-            this.moveSpeed *= 2;
-            this.speedUp = true;
-        }
+        // if(((game.settings.gameTimer = 60000 && this.clock.getRemaining() <= 30000) || (game.settings.gameTimer = 45000 && this.clock.getRemaining() <= 15000)) && !this.speedUp ){
+        //     this.moveSpeed *= 2;
+        //     this.speedUp = true;
+        // }
     }
 
     // position reset
