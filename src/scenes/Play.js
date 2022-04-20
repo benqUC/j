@@ -38,6 +38,9 @@ class Play extends Phaser.Scene {
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
+        pointer = this.input.activePointer;
+
+
         // animation config
         this.anims.create({
             key: 'explode',
@@ -63,6 +66,7 @@ class Play extends Phaser.Scene {
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
 
+
         let timerConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
@@ -75,7 +79,9 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.add.text(borderUISize - borderPadding, borderUISize - borderPadding*2, this.gameTimer, scoreConfig);
+        // var remaining = game.settings.gameTimer.getRemainingSeconds(); 
+        this.gameTimer = this.add.text(borderPadding, borderPadding, game.settings.gameTimer, timerConfig);
+
 
         // GAME OVER flag
         this.gameOver = false;
