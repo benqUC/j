@@ -25,9 +25,9 @@ class Play extends Phaser.Scene {
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
 
         // add Rocket (p1)
-        this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0);
+        this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket', true).setOrigin(0.5, 0);
 
-        this.p2Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(1.5, 0);
+        this.p2Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket', false).setOrigin(2, 0);
 
         // add Spaceships (x3)
         this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'spaceship', 0, 30).setOrigin(0, 0);
@@ -41,7 +41,6 @@ class Play extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
         pointer = this.input.activePointer;
-
 
         // animation config
         this.anims.create({
@@ -85,7 +84,7 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
         }
 
-        this.scoreRight = this.add.text(game.config.width + borderPadding, borderUISize + borderPadding*5, this.p2Score, scoreConfig1);
+        this.scoreRight = this.add.text(game.config.width/1.5 - borderPadding + 50, borderUISize + borderPadding*2, this.p2Score, scoreConfig1);
 
         // display timer
         let timerConfig = {
@@ -100,7 +99,7 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.timerLeft = this.add.text(borderPadding, borderPadding, game.settings.gameTimer/1000, timerConfig);
+        this.timerLeft = this.add.text(game.config.width/2.2 - borderPadding, borderPadding + 45, game.settings.gameTimer/1000, timerConfig);
 
 
         // GAME OVER flag
@@ -114,9 +113,15 @@ class Play extends Phaser.Scene {
             this.gameOver = true;
         }, null, this);
 
+        // values for speed up and display timer
         this.speedUp = false;
         this.resources = 0;
         this.timer = 0;
+
+        // background music
+        this.playSong = this.sound.add('bgm_play'); 
+        this.playSong.play();
+        this.playSong.loop = true;
     }
 
     update(time, delta) {
@@ -137,6 +142,9 @@ class Play extends Phaser.Scene {
              this.ship01.update();               // update spaceship (x3)
             this.ship02.update();
             this.ship03.update();
+        }
+        if (this.gameOver){
+            this.playSong.stop();
         }
 
         // check collisions
@@ -166,6 +174,7 @@ class Play extends Phaser.Scene {
             this.shipExplode(this.ship01);
         }
 
+        // speed increase
         if ((this.clock.getElapsed() >= 10000) && !this.speedUp){
             this.ship01.moveSpeed++;
             this.ship02.moveSpeed++;
@@ -209,6 +218,7 @@ class Play extends Phaser.Scene {
         // score add and repaint
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score; 
+        game.settings.gameTimer
 
         this.p2Score += ship.points;
         this.scoreRight.text = this.p2Score;
