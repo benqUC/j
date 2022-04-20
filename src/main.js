@@ -29,6 +29,7 @@ Redesign the game's artwork, UI, and sound to change its theme/aesthetic (to som
 Point total (100) [105 if not limited to 100]
 */
 /* Used: 
+https://gamedev.stackexchange.com/questions/182242/phaser-3-how-to-trigger-an-event-every-1-second
 https://www.piskelapp.com/
 https://rexrainbow.github.io/phaser3-rex-notes/docs/site/timer/
 https://mixkit.co/free-sound-effects/explosion/
